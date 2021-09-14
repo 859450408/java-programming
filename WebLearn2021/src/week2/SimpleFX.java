@@ -73,14 +73,11 @@ public class SimpleFX extends Application {
         btnClean.setOnAction(event -> {taDisplay.clear();});
 
         btnExit.setOnAction(event -> {
-            if(tcpClient != null){
-                //向服务器发送关闭连接的约定信息
-                tcpClient.send("bye");
-                tcpClient.close();
-            }
+            Exit();
+        });
 
-
-            System.exit(0);
+        primaryStage.setOnCloseRequest(event -> {
+            Exit();
         });
 
         btnSend.setOnAction(event -> {
@@ -151,5 +148,13 @@ public class SimpleFX extends Application {
         } else {
         taDisplay.appendText("请输入内容\n");
         }
+    }
+
+    private void Exit(){
+        if (tcpClient != null){
+            tcpClient.send("bye");
+            tcpClient.close();
+        }
+        System.exit(0);
     }
 }
